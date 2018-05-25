@@ -1,0 +1,46 @@
+// ==UserScript==
+// @name         Grails Search
+// @namespace    http://lti-admin-ui.eols.io/
+// @version      0.1
+// @description  Search Grails at your leisure.
+// @author       Paul Smith
+// @match        *lti-admin-ui.eols.io/consumerKey/*
+// @require      https://code.jquery.com/jquery-3.3.1.min.js
+// @require      https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js
+// @resource     customCSS https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css
+// @grant        GM_addStyle
+// @grant        GM_getResourceText
+// ==/UserScript==
+$(document).ready( function () {
+    'use strict';
+    var newCSS = GM_getResourceText ("customCSS");
+    GM_addStyle (newCSS);
+    var lastPage = ($('#list-consumerKey > div.pagination > a:nth-child(12)').text()+"0") - 10;
+    var table = $('#list-consumerKey > table').DataTable();
+    $('#list-consumerKey > div.pagination').hide();
+    console.log(lastPage)
+    for (var i = 10; i <= lastPage; i += 10){
+        var payload = {
+            sort: 'key',
+            order: 'asc',
+            offset: i,
+            max: '10'
+        }
+        $.ajax({
+            url: 'http://lti-admin-ui.eols.io/consumerKey/index',
+            type: 'GET',
+            data: payload,
+            contentType: "application/json",
+            success: function(data) {
+                var rows = $($($.parseHTML(data)).children()[3]).children(0).children(1);
+                $.each(rows, function(index, value) {
+                    table.row.add(value).draw();
+                });
+            },
+            error: function(e) {
+                alert("There was an error retreiving datatable information! See the console for more info.");
+                console.log(e);
+            }
+        });
+    }
+});
