@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Grails Search
 // @namespace    http://lti-admin-ui.eols.io/
-// @version      0.2
+// @version      0.3
 // @description  Search Grails at your leisure.
 // @author       Paul Smith
 // @match        *lti-admin-ui.eols.io/consumerKey/*
@@ -17,8 +17,8 @@ $(document).ready(function() {
     GM_addStyle(newCSS);
     var lastPage = ($('#list-consumerKey > div.pagination > a:nth-child(12)').text() + '0') - 10;
     var table = $('#list-consumerKey > table').DataTable();
+    var warn = 0;
     $('#list-consumerKey > div.pagination').hide();
-    console.log(lastPage)
     for (var i = 10; i <= lastPage; i += 10) {
         var payload = {
             sort: 'key',
@@ -40,8 +40,11 @@ $(document).ready(function() {
                 });
             },
             error: function(e) {
-                alert('There was an error retreiving datatable information! See the console for more info.');
-                console.log(e);
+                if (warn === 0) {
+                    alert('There was an error retreiving datatable information! See the console for more info.');
+                    console.log(e);
+                    warn = 1;
+                }
             }
         });
     }

@@ -10,22 +10,5 @@
 // @resource     customCSS https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css
 // ==/UserScript==
 $(document).ready(function() {
-    llamas();
+	
 });
-
-function llamas() {
-    google.load('search', '1');
-    google.setOnLoadCallback(OnLoad);
-    var search;
-    var keyword = 'llamas';
-    search = new google.search.ImageSearch();
-    search.setSearchCompleteCallback(this, searchComplete, null);
-    search.execute(keyword);
-}
-
-function searchComplete() {
-    if (search.results && search.results.length > 0) {
-        var rnd = Math.floor(Math.random() * search.results.length);
-        $('body > ui-view > div > div > div.container__hero-image.container__hero-image__image--split').replaceWith('<img src="' + search.results[rnd]['url'] + '"/>');
-    }
-}
