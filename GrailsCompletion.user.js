@@ -30,17 +30,17 @@ $(document).ready(function() {
             case 'Moodle':
                 break;
             case 'Other':
-                break
+                break;
             default:
                 window.alert('Unable to match "System Name" value for Completion. This script may need to be updated. Please see the console log for further information.');
                 console.log(GM_Info);
         }
     });
+    $('#systemName').trigger('change');
 });
 
 function clearValues() {
     $('#create-lmsConfig > form > fieldset.form').find('input').each(function(index, value) {
-    	console.log(value);
-    	$(value).val('');
+        $(value).val('');
     });
 }

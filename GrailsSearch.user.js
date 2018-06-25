@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Grails Search
 // @namespace    http://lti-admin-ui.eols.io/
-// @version      0.3
+// @version      0.4
 // @description  Search Grails at your leisure.
 // @author       Paul Smith
 // @match        *lti-admin-ui.eols.io/*
@@ -12,21 +12,20 @@
 // @grant        GM_getResourceText
 // ==/UserScript==
 var warn = 0;
+
 $(document).ready(function() {
     'use strict';
-    var newCSS = GM_getResourceText("customCSS");
+    var newCSS = GM_getResourceText('customCSS');
     GM_addStyle(newCSS);
-
     var maxOffset;
     var url = window.location.href;
     var table;
-
     switch (window.location.pathname) {
         case '/lmsConfig/index':
             $('#list-lmsConfig > div.pagination').hide();
             maxOffset = ($('#list-lmsConfig > div.pagination > a:nth-child(12)').text() + '0') - 10;
             table = $('#list-lmsConfig > table').DataTable({
-                "scrollX": true
+                'scrollX': true
             });
             concatTables(url, maxOffset, table, 'clientName');
             break;
