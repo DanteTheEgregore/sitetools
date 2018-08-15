@@ -1,0 +1,35 @@
+// ==UserScript==
+// @name         Backoffice Login As
+// @namespace    evolve.elsevier.com
+// @version      0.1
+// @description  Login as user from Backoffice
+// @author       Paul Smith
+// @match		 https://backoffice.ehsevolve.com/*
+// @match		 https://evolve.elsevier.com/*
+// @require      https://code.jquery.com/jquery-3.3.1.min.js
+// @grant		 GM_setValue
+// @grant		 GM_getValue
+// ==/UserScript==
+
+var lastTd = '#accountForm > table > tbody > tr:nth-child(6) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(11) > td';
+
+$(document).ready(function() {
+	'use strict';
+	if(window.location.pathname === '/admin/viewUserProfile') {
+		$(lastTd).after('<td valign="top" width="90"></td><td valign="top"></br><button id="loginAs" type="button">Login As</button></td>');
+	}
+
+	$('loginAs').click(function() {
+		GM_setValue('userName', $('#email').val());
+		GM_setValue('password', $('#password').val());
+
+		window.open('https://evolve.elsevier.com/cs/login');
+	});
+
+	if(window.location.pathname === '/cs/login')
+	{
+		if(document.referrer.indexOf('backoffice.ehsevolve.com') != -1){
+
+		}
+	}
+});

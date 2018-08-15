@@ -23,4 +23,19 @@ $(document).ready(function() {
             window.open('http://lti-admin-ui.eols.io/consumerKey/index?sort=institutionId&max=10&order=desc');
         });
     }
+
+    $('#deliveryMethodContainer').change(function() {
+    	showButtons();
+    });
 });
+
+function showButtons() {
+	if ($('#deliveryMethodContainer').val() === 'Cartridge') {
+		$('#newInfo').attr('style', 'visbility: hidden');
+		$('#goInfo').attr('style', 'visbility: hidden');
+	}
+	else {
+		$('#newInfo').attr('style', 'visbility: visible');
+		$('#goInfo').attr('style', 'visbility: visible');
+	}
+}

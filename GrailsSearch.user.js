@@ -49,10 +49,9 @@ $(document).ready(function() {
             concatTables(url, maxOffset, table, 'key');
             break;
         case '/outcomeBuffer/index':
-            console.log('true');
             $('#list-outcomeBuffer > div.pagination').hide();
             maxOffset = ($('#list-outcomeBuffer > div.pagination > a:nth-child(12)').text() + '0') - 10;
-            table = $('#list-outcomeBuffer > table').DataTable();
+            table = $('#tableWrapper > table').DataTable();
             concatTables(url, maxOffset, table, 'lmsClientId');
             break;
         case '/outcomeLog/index':
